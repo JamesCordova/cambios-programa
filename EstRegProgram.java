@@ -20,7 +20,7 @@ public class EstRegProgram {
         connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/casaapuestas", "root", "admin");
         statement = connection.createStatement();
     }
-    
+
     private Border createTitledBorder(String title) {
         Border border = BorderFactory.createLineBorder(Color.GRAY);
         return BorderFactory.createTitledBorder(border, title);
@@ -67,7 +67,7 @@ public class EstRegProgram {
         constraints.gridx = 1;
         descripcionTextField = new JTextField(20);
         panel.add(descripcionTextField, constraints);
-        
+
         constraints.gridy = 2;
         constraints.gridx = 0;
         JLabel estRegLabel = new JLabel("Estado Registro:");
@@ -85,7 +85,7 @@ public class EstRegProgram {
 
     private JPanel createTablePanel() {
         JPanel panel = new JPanel(new FlowLayout());
-        
+
         panel.setBorder(createTitledBorder("Tabla estados de registros"));
 
         tablaItems = new JTable();
@@ -113,7 +113,7 @@ public class EstRegProgram {
             }
         });
         panel1.add(updateButton);
-        
+
         JButton deleteButton = new JButton("Eliminar");
         deleteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -121,7 +121,7 @@ public class EstRegProgram {
             }
         });
         panel1.add(deleteButton);
-        
+
         JButton cancelButton = new JButton("Cancelar");
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -129,7 +129,7 @@ public class EstRegProgram {
             }
         });
         panel1.add(cancelButton);
-        
+
         JPanel panel2 = new JPanel();
         panel2.setLayout(new FlowLayout());
 
@@ -139,9 +139,9 @@ public class EstRegProgram {
                 inactivarRegistro();
             }
         });
-        
+
         panel2.add(inactiveButton);
-        
+
 
         JButton reactivateButton = new JButton("Reactivar");
         reactivateButton.addActionListener(new ActionListener() {
@@ -150,7 +150,7 @@ public class EstRegProgram {
             }
         });
         panel2.add(reactivateButton);
-        
+
         JButton actualizarButton = new JButton("Actualizar");
         actualizarButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -158,7 +158,7 @@ public class EstRegProgram {
             }
         });
         panel2.add(actualizarButton);
-        
+
         JButton quitButton = new JButton("Salir");
         quitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -166,7 +166,7 @@ public class EstRegProgram {
             }
         });
         panel2.add(quitButton);
-        
+
         JPanel finalPanel = new JPanel(new BorderLayout());
         finalPanel.add(panel1, BorderLayout.NORTH);
         finalPanel.add(panel2, BorderLayout.SOUTH);
@@ -223,7 +223,7 @@ public class EstRegProgram {
         String codigo = codigoTextField.getText();
         String descripcion = descripcionTextField.getText();
         String estReg = estRegTextField.getText();
-        
+
         if(codigo.isEmpty() || codigo.isBlank()) {
         	mostrarError("El código esta en blanco o no es válido");
         }
@@ -258,7 +258,7 @@ protegiendo el dato código y estado de registro). */
         int selectedRow = tablaItems.getSelectedRow();
 
         if (selectedRow >= 0 && codigoTextField.isEditable() == true) {
-        	
+
         	String codigo = (String) "" + tableModel.getValueAt(selectedRow, 0);
             String descripcion = (String) "" + tableModel.getValueAt(selectedRow, 1);
             String estReg = (String) "" + tableModel.getValueAt(selectedRow, 2);
@@ -267,15 +267,15 @@ protegiendo el dato código y estado de registro). */
             codigoTextField.setEditable(false);
             descripcionTextField.setText(descripcion);
             estRegTextField.setText(estReg);
-            
-            
+
+
         }
         else{
             try {
             	String codigo = codigoTextField.getText();
                 String descripcion = descripcionTextField.getText();
                 String estReg = estRegTextField.getText();
-                
+
                 String query = "UPDATE estado_registro SET EstRegDes = ?, estRegEstReg = ? WHERE EstReg = ?";
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
                 preparedStatement.setString(1, descripcion);
@@ -360,7 +360,7 @@ protegiendo el dato código, descripción y estado de registro). */
 
         }
     }
-    
+
     private void actualizarRegistro() {
     	String codigo = null;
         String descripcion = null;
@@ -369,7 +369,7 @@ protegiendo el dato código, descripción y estado de registro). */
         	codigo = codigoTextField.getText();
             descripcion = descripcionTextField.getText();
             estReg = estRegTextField.getText();
-            
+
             String query = "UPDATE estado_registro SET EstRegDes = ?, estRegEstReg = ? WHERE EstReg = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, descripcion);
@@ -412,14 +412,14 @@ protegiendo el dato código, descripción y estado de registro). */
 
         System.exit(0);
     }
-    
+
     private static void mostrarError(String mensaje) {
         JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
     }
-    
-    
-    
-    
+
+
+
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -432,4 +432,5 @@ protegiendo el dato código, descripción y estado de registro). */
         });
     }
 }
+
 
